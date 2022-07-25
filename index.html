@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <link href="style.css" rel="normal.css">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+
+
+  <div class="flex w-100 align-center justify-center header">
+    <img class="image-size" src="IMG/Swords.png">
+    <h1 class="title">Polytopia Battle Calculator</h1>
+    <img class="image-size" src="IMG/Swords.png">
+  </div>
+
+
+  <div class="d-flex">
+  
+    
+      <form class="form">
+
+        <div class="flex">
+          <img class="dragon"src="IMG/Defenders/Swordsman.png"> </img>
+        </div>
+
+        <fieldset>
+
+          
+          <h1>Offence</h1>
+          <label for="unit">Unit:</label>
+
+          <select id="offence"><!-- removed id="unit" which matched the label for value-->
+            <optgroup label="attackers">
+              <option id="fighterA">Warrior</option>
+              <option id="fighterA">Rider</option>
+              <option>Defender</option>
+              <option>Swordsman</option>
+              <option>Archer</option>
+              <option>Catapault</option>
+              <option>Knight</option>
+              <option>Giant</option>
+              <option>Boat</option>
+              <option>Ship</option>
+              <option>Battleship</option>
+              <option>Amphibian</option>
+              <option>Crab</option>
+              <option>Tridention</option>
+              <option>Polytaur</option>
+              <option>Navalon</option>
+              <option>Baby Dragon</option>
+              <option>Fire Dragon</option>
+              <option>Ice Archer</option>
+              <option>Battle Sled</option>
+          </optgroup>
+          </select>
+
+          <label>Is it Veteran?
+            <input type="checkbox">
+          </label>
+
+          <label>HP
+          <input type="text">
+          </label>
+
+          <label>Is it Boosted?
+            <input type="checkbox">
+          </label>
+
+        </fieldset>
+
+      </form>
+
+      <form class="form">
+
+        <div class="flex">
+          <img class="defender"src="IMG/Attackers/Defender.png"> </img>
+        </div>
+
+        <fieldset>
+
+
+          <h1>Defence</h1>
+          <label for="unit">Unit:   </label>
+
+          <select id="defence">  <!-- removed id="unit" which matched the label for value-->
+            <optgroup label="defenders">
+              <option id="fighterD" value="warrior">Warrior</option>
+              <option id="fighterD" value="rider">Rider</option>
+              <option>Defender</option>
+              <option>Swordsman</option>
+              <option>Archer</option>
+              <option>Catapault</option>
+              <option>Knight</option>
+              <option>Giant</option>
+              <option>Boat</option>
+              <option>Ship</option>
+              <option>Battleship</option>
+              <option>Amphibian</option>
+              <option>Crab</option>
+              <option>Tridention</option>
+              <option>Polytaur</option>
+              <option>Navalon</option>
+              <option>Baby Dragon</option>
+              <option>Fire Dragon</option>
+              <option>Ice Archer</option>
+              <option>Battle Sled</option>
+          </optgroup>
+          </select>
+
+          <label>Is it Veteran?
+            <input type="checkbox">
+          </label>
+
+          <label>HP
+          <input type="text">
+          </label>
+
+          <label>Is it Poisoned?
+            <input type="checkbox">
+          </label>
+
+          <label>1.5 * Def bonus
+            <input type="checkbox">
+          </label>
+
+          <label>4 * Def bonus(City Wall)
+            <input type="checkbox">
+          </label>
+
+        </fieldset>
+        
+      </form>
+  </div>
+
+    <div class="flex">
+    <button id="btn-main">Show fighters</button>
+    </div>
+
+
+<script src="index.js"></script>
+</body>
+</html>
