@@ -28,13 +28,13 @@
       <form class="form">
 
         <div class="flex">
-          <img class="dragon"src="IMG/Defenders/Swordsman.png"> </img>
+          <img class="dragon"src="IMG/Attackers/Swordsman.png"> </img>
         </div>
 
         <fieldset>
 
           
-          <h1>Offence</h1>
+          <h1>Offense</h1>
           <label for="unit">Unit:</label>
 
           <select id="offence"><!-- removed id="unit" which matched the label for value-->
@@ -59,16 +59,16 @@
       <form class="form">
 
         <div class="flex">
-          <img class="defender"src="IMG/Attackers/Defender.png"> </img>
+          <img class="defender"src="IMG/Defenders/Defender.png"> </img>
         </div>
 
         <fieldset>
 
 
-          <h1>Defence</h1>
+          <h1>Defense</h1>
           <label for="unit">Unit:   </label>
 
-          <select id="defence">  <!-- removed id="unit" which matched the label for value-->
+          <select id="defence"> 
           </select>
 
           <label>Is it Veteran?
@@ -97,9 +97,14 @@
   </div>
 
     <div class="flex">
-    <button id="btn-main">Show fighters</button>
+    <button id="btn-main">Show Results</button>
     </div>
 
+    <div id="results-grid">
+     
+    </div>
+
+    <img src="IMG/Attackers/Warrior.png" id="warrior-img" class="all_images">
 
 <script src="index.js"></script>
 </body>

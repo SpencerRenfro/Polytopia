@@ -22,6 +22,33 @@ var characters = {
     }
   }
 
+// picture variables
+
+  // var warrior = document.createElement('img');
+  // warrior.src = "IMG/Attackers/Warrior.png";
+  // var imageDiv = document.getElementById('icon');
+
+  // function uploadImage(warrior) {
+  //   document.appendChild(warrior);
+  // }
+
+
+  // var attackerImages = ["IMG/Attackers/Warrior.png","IMG/Attackers/Rider.png","IMG/Attackers/Swordsman.png"];
+
+  // function printImages(images){
+  //   for(var i =0; i< images.length; i++){
+  //    images[i].appendChild(results_list)
+  //   }
+  // }
+  
+  // printImages(attackerImages);
+ 
+
+  // const selectedAttackerImage = attackerImages.find(generateImage);
+
+  // function generateImage(item) {
+  //   return item === selectedAttacker.name;
+  // }
 
   // dom elements
 
@@ -35,6 +62,8 @@ var characters = {
   var offenceInputHP = document.getElementById('offence-hp');
   var offenceBoosted = document.getElementById('offence-boosted');
   var offenceInputHP = document.getElementById('user-offence-hp');
+
+  var results_list = document.getElementById('results-grid');
 
   var offenceSelectInput = document
       .getElementById('offence');
@@ -58,6 +87,7 @@ var characters = {
     inputHealth: 0,
     attack: 0,
     defence: 0,
+    defence_Bonus: 1,
     isBoosted: false,
     isPoisoned: false,
     isVeteran: false,
@@ -125,6 +155,15 @@ function handleSelectOffence(ev) {
 
 
 /** NEW */
+// new function to load images from selected input
+// getCharImages(attackerInputValue, defenderInputValue){
+//   for(var getCharacterImage in characters){
+//     if(getCharacterImage === attackerInputValue){
+//         var generated_Image = 
+//     }
+//   }
+// }
+
 function getCharData(attackerInputValue, defenderInputValue) {
   for (var getCharacterName in characters) {
     // assigning values to the selected attacker from user input
@@ -185,6 +224,10 @@ function modifyResultsFromUserInput() {
 
 }
 
+
+
+
+
 resultsButton.addEventListener('click', () => {
  //  assign selected attacker
  // assign selected defender
@@ -196,7 +239,31 @@ resultsButton.addEventListener('click', () => {
  // populate and display results
   console.log(`You have chosen ${selectedAttacker.name} for the offence`, selectedAttacker);
   console.log(`You have chosen ${selectedDefender.name} for the defence`, selectedDefender);
+
+  // adds html and css display for offence and defence
+
+  results_list.className ="grid";
+  results_list.insertAdjacentHTML(
+    'afterbegin',
+    `
+    <div class="inline-block"> unit </div>
+    <div class="inline-block"> Original HP </div>
+    <div class="inline-block"> New HP</div>
+    <div class="inline-block"> Status </div> 
+
+    <div class="inline-block"> ${selectedAttacker.name}(Offense) </div>
+    <div class="inline-block">${offenceInputHP.value}</div>
+    <div class="inline-block" id="offence-remaining-hp">Insert remaining HP here</div>
+    <div class="inline-block" id="offence-status">Insert status here</div>
+    <div class="inline-block"> ${selectedDefender.name}(Defense) </div> 
+    <div class="inline-block">${defenceInputHP.value}</div>
+    <div class="inline-block" id="defence-remaining-hp" >Insert remaining HP here</div>
+    <div class="inline-block" id="defence-status">Insert status here</div>
+    `
+  );
   
+calculateBattle();
+
 });
 
 
@@ -212,7 +279,37 @@ function calculateBattle() {
     // calculate results
     // create results object
     // display results in the DOM
+
+    var attackForce = selectedAttacker.attack * (selectedAttacker.inputHealth / selectedAttacker.maxHealth);
+    var defenceForce = selectedDefender.defence * (selectedDefender.inputHealth / selectedDefender.maxHealth) * selectedDefender.defence_Bonus;
+    var totalDamage = attackForce + defenceForce;
+    var attackResult = Math.round((attackForce / totalDamage) * selectedAttacker.attack * 4.5);
+    var defenceResult = Math.round((defenceForce / totalDamage) * selectedDefender.defence * 4.5);
+
+    var attacker_result_HP = document.getElementById('offence-remaining-hp');
+    var defender_result_HP = document.getElementById('defence-remaining-hp');
+
+    attacker_result_HP.innerHTML = attackResult;
+    defender_result_HP.innerHTML = defenceResult;
+
+    var attackerStatus = document.getElementById('offence-status');
+    var defenderStatus = document.getElementById('defence-status');
+ 
+    if(attackResult > 0){
+      attackerStatus.innerHTML = 'Survived';
+    }
+    else{
+      attackerStatus.innerHTML = 'Defeated';
+    }
+    if(defenceResult > 0){
+      defenderStatus.innerHTML = 'Survived';
+    }
+    else{
+      defenderStatus.innerHTML = 'Defeated';
+    }
+   
 }
+
 
 /*
 selected character

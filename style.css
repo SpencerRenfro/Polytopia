@@ -84,10 +84,15 @@ form {
     background-color: #FD5AA1;
   }
 
+  /* loaded images for results */
+
+  .all_images{
+    display: none;
+  }
 
   /* this is for the show fighters button */
 
-  .wrapper {
+  /* .wrapper {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -97,6 +102,22 @@ form {
     border-radius: 25px 25px 0 0;
     background-color: black;
     color: white;
-  }
+  } */
  
+.grid {
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px;
+  border: solid 3px black;
+  justify-content: center;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.inline-block{
+  display: inline-block;
+  padding: 12px;
+}
 
