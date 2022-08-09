@@ -1,5 +1,23 @@
 // Quick n' Dirty
-
+// Defender 15 1 3
+// Mind_Bender 0 1
+// Archer 10 2 1
+// Catapult 10 4 0
+// Giant 40 5 4
+// Hexapod 5 3 1
+// Doomux 20 4 2
+// Kiton 20 1 3
+// Raychi 15 3 2
+// Phychi 5 1 1
+// Exida 10 3 1
+// Centipede 20 4 3
+// Shaman 10 1 1
+// Ice_Fortress 20 4 3
+// Gaami 30 4 4
+// Mooni 10 0 2
+// Ice_Archer 10 0.1 1
+// Amphibian 10 2 1
+// Tridention 15 3 1
 var characters = {
     warrior: {
       name: "Warrior",
@@ -19,6 +37,12 @@ var characters = {
         maxHealth: 15,
         attack: 3.5,
         defence: 3,
+    },
+    defender: {
+      name: "Defender",
+      maxHealth: 15,
+      attack: 1,
+      defence: 3,
     }
   }
 
@@ -50,6 +74,9 @@ var characters = {
   //   return item === selectedAttacker.name;
   // }
 
+
+  // global variables
+  var selectedAttackerInputValue,selectedDefenderInputValue;
   // dom elements
 
   var defenceVeteran = document.getElementById('defence-veteran');
@@ -181,7 +208,7 @@ function getCharData(attackerInputValue, defenderInputValue) {
         selectedAttacker.inputHealth = parseInt(offenceInputHP.value);
       }
       if(offenceBoosted.checked){
-        selectedAttacker.attack = selectedAttacker.attack * 1.5;
+        selectedAttacker.isBoosted = true;
       }
     }
 
@@ -201,13 +228,13 @@ function getCharData(attackerInputValue, defenderInputValue) {
         selectedDefender.inputHealth = parseInt(defenceInputHP.value);
       }
       if(defencePoison.checked){
-        selectedDefender.defence = selectedDefender.defence * .8; 
+        selectedDefender.defence_Bonus = .8; 
       }
       if(defenceBonusNormal.checked && !defencePoison.checked){
-        selectedDefender.defence = selectedDefender.defence * 1.5;
+        selectedDefender.defence_Bonus = 1.5;
       }
       if(defenceBonusWall.checked && !defencePoison.checked){
-        selectedDefender.defence = selectedDefender.defence * 4;
+        selectedDefender.defence_Bonus = 4;
       }
     }
   }
@@ -220,9 +247,9 @@ function getCharData(attackerInputValue, defenderInputValue) {
   }
 }
 
-function modifyResultsFromUserInput() {
+// function modifyResultsFromUserInput() {
 
-}
+// }
 
 
 
@@ -231,8 +258,8 @@ function modifyResultsFromUserInput() {
 resultsButton.addEventListener('click', () => {
  //  assign selected attacker
  // assign selected defender
- var selectedAttackerInputValue = offenceSelectInput.value;
- var selectedDefenderInputValue = defenceSelectInput.value;
+ selectedAttackerInputValue = offenceSelectInput.value;
+ selectedDefenderInputValue = defenceSelectInput.value;
  // function to get data
  getCharData(selectedAttackerInputValue, selectedDefenderInputValue);
  //  read check boxes for modifiers
@@ -243,6 +270,7 @@ resultsButton.addEventListener('click', () => {
   // adds html and css display for offence and defence
 
   results_list.className ="grid";
+  results_list.innerHTML = "";
   results_list.insertAdjacentHTML(
     'afterbegin',
     `
@@ -262,7 +290,7 @@ resultsButton.addEventListener('click', () => {
     `
   );
   
-calculateBattle();
+calculateBattle(offenceInputHP.value);
 
 });
 
@@ -273,35 +301,61 @@ calculateBattle();
   
 // create new function called calculateBattle 
 
-function calculateBattle() {
+function calculateBattle(selectedAttackerInputValue,selectedDefenderInputValue) {
 
     // list all variables needed
     // calculate results
     // create results object
     // display results in the DOM
 
+    /**	totaldam = attforce + defforce;
+		res = Math.round(attforce / totaldam * att * 4.5); 
+    attforce = att * (atthp / attmaxhp);
+		defforce = def * (defhp / defmaxhp);
+
+    */
+    if(selectedAttacker.isBoosted){
+      selectedAttacker.attack = selectedAttacker.attack + .5;
+    }
     var attackForce = selectedAttacker.attack * (selectedAttacker.inputHealth / selectedAttacker.maxHealth);
-    var defenceForce = selectedDefender.defence * (selectedDefender.inputHealth / selectedDefender.maxHealth) * selectedDefender.defence_Bonus;
+    var defenceForce = (selectedDefender.defence * (selectedDefender.inputHealth / selectedDefender.maxHealth)) * selectedDefender.defence_Bonus;
     var totalDamage = attackForce + defenceForce;
-    var attackResult = Math.round((attackForce / totalDamage) * selectedAttacker.attack * 4.5);
-    var defenceResult = Math.round((defenceForce / totalDamage) * selectedDefender.defence * 4.5);
+
+    var attackResult = Math.round(attackForce / totalDamage * selectedAttacker.attack * 4.5);
+    var defenceResult = Math.round(defenceForce / totalDamage * selectedDefender.defence * 4.5);
+
+    // var result = Math.round(attackForce / totalDamage * selectedAttacker.attack * 4.5);
 
     var attacker_result_HP = document.getElementById('offence-remaining-hp');
     var defender_result_HP = document.getElementById('defence-remaining-hp');
 
-    attacker_result_HP.innerHTML = attackResult;
-    defender_result_HP.innerHTML = defenceResult;
+     // status variables
+     var offense_status_HP = selectedAttacker.inputHealth - defenceResult;
+     var defense_status_HP = selectedDefender.inputHealth - attackResult;
+     var attackerStatus = document.getElementById('offence-status');
+     var defenderStatus = document.getElementById('defence-status');
 
-    var attackerStatus = document.getElementById('offence-status');
-    var defenderStatus = document.getElementById('defence-status');
+    defender_result_HP.innerHTML = selectedDefender.inputHealth - attackResult;
+
+    if(defense_status_HP <= 0){
+      attacker_result_HP.innerHTML = offenceInputHP.value;
+    }
+    else{
+      attacker_result_HP.innerHTML = selectedAttacker.inputHealth - defenceResult;
+    }
+
+   
+
+
+   
  
-    if(attackResult > 0){
+    if(offense_status_HP > 0){
       attackerStatus.innerHTML = 'Survived';
     }
     else{
       attackerStatus.innerHTML = 'Defeated';
     }
-    if(defenceResult > 0){
+    if(defense_status_HP > 0){
       defenderStatus.innerHTML = 'Survived';
     }
     else{
@@ -312,7 +366,7 @@ function calculateBattle() {
 
 
 /*
-selected character
+Math
 */
 
 
